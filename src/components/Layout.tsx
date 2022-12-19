@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => {
 			</Head>
 			<div
 				className={
-					'box-border flex w-screen flex-col items-center justify-between bg-white p-2 md:p-8 lg:p-16 xl:p-16 2xl:px-32'
+					'box-border flex h-screen w-screen flex-col items-center bg-white p-2 md:p-8 lg:p-16 xl:p-16 2xl:px-32'
 				}
 			>
 				{children}
