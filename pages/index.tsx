@@ -9,7 +9,11 @@ const Home: NextPage = () => {
 		return { title: `게시글${index}` };
 	});
 	const titleList = articleList.map((article, index) => {
-		return <ListRow key={`${article}-${index}`}>{article?.title}</ListRow>;
+		return (
+			<ListRow key={`${article}-${index}`} onClick={() => router.push(`/detail/${index}`)}>
+				{article?.title}
+			</ListRow>
+		);
 	});
 	return (
 		<>
