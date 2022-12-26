@@ -2,19 +2,21 @@ import type { NextPage } from 'next';
 import ListHeader from '../src/components/ListHeader';
 import ListRow from '../src/components/ListRow';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { ArticleContext } from '../src/provider/ArticleProvider';
 
 const Home: NextPage = () => {
 	const router = useRouter();
-	const articleList = [...Array(20)].map((_, index) => {
-		return { title: `게시글${index}` };
-	});
-	const titleList = articleList.map((article, index) => {
+
+	const { articles } = useContext(ArticleContext);
+	const titleList = articles.map((article, index) => {
 		return (
 			<ListRow key={`${article}-${index}`} onClick={() => router.push(`/detail/${index}`)}>
 				{article?.title}
 			</ListRow>
 		);
 	});
+
 	return (
 		<>
 			<ListHeader

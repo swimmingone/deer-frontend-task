@@ -1,18 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import FormItem from './FormItem';
 import SubmitButton from './SubmitButton';
+import { Article } from '../types/Article';
 
 interface Prop {
-	data: {
-		title: string;
-		content?: string | undefined;
-	};
-	setData: Dispatch<
-		SetStateAction<{
-			title: string;
-			content?: string | undefined;
-		}>
-	>;
+	data: Article;
+	setData: Dispatch<SetStateAction<Article>>;
 	onSubmit?: () => void;
 }
 
@@ -26,7 +19,7 @@ const ArticleForm = ({ data, setData, onSubmit }: Prop) => {
 						type={'text'}
 						className="input-bordered input input-sm"
 						value={data.title}
-						onChange={(e) => setData({ title: e.target.value, content: data.content })}
+						onChange={(e) => setData({ ...data, title: e.target.value })}
 						maxLength={20}
 					/>
 					{!data.title && (
@@ -42,7 +35,7 @@ const ArticleForm = ({ data, setData, onSubmit }: Prop) => {
 						rows={10}
 						className="textarea-bordered textarea w-full"
 						value={data.content}
-						onChange={(e) => setData({ title: data.title, content: e.target.value })}
+						onChange={(e) => setData({ ...data, content: e.target.value })}
 						maxLength={500}
 					/>
 					<p className={'text-sm text-gray-300'}>{data.content?.length} / 500</p>

@@ -1,22 +1,24 @@
 import type { NextPage } from 'next';
 import ListHeader from '../src/components/ListHeader';
 import ArticleForm from '../src/components/ArticleForm';
-import { Article } from '../src/model/Article';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ArticleContext } from '../src/provider/ArticleProvider';
+import { Article } from '../src/types/Article';
 
 const Create: NextPage = () => {
 	const router = useRouter();
+	const { onCreate } = useContext(ArticleContext);
 
-	const [article, setArticle] = useState<{ title: string; content?: string }>({
+	const [article, setArticle] = useState<Article>({
+		id: 0,
 		title: '',
 		content: '',
 	});
 
 	const onSubmit = () => {
 		if (article) {
-			const newArticle = new Article(article.title, article.content ?? '');
-			// onCreate(newArticle);
+			onCreate(article);
 		} else {
 			alert('게시글이 생성되지 않았습니다.');
 		}
