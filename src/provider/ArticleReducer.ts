@@ -1,4 +1,5 @@
 import { Article } from '../types/Article';
+import newID from '../utils/newId';
 import removeItemAtIndex from '../utils/removeItemAtIndex';
 import replaceItemAtIndex from '../utils/replaceItemAtIndex';
 
@@ -22,7 +23,7 @@ export default function reducer(state: Article[], action: ArticlesAction): Artic
 			return [
 				...state,
 				{
-					id: action.payload.id,
+					id: newID(),
 					title: action.payload.title,
 					content: action.payload.content,
 				},
