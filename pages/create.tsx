@@ -10,11 +10,13 @@ const Create: NextPage = () => {
 	const router = useRouter();
 	const { onCreate } = useContext(ArticleContext);
 
-	const [article, setArticle] = useState<Article>({
-		id: 0,
+	const initialArticle = {
+		id: '',
 		title: '',
 		content: '',
-	});
+	};
+
+	const [article, setArticle] = useState<Article | null>(initialArticle);
 
 	const onSubmit = () => {
 		if (article) {
@@ -25,6 +27,7 @@ const Create: NextPage = () => {
 		router.push('/');
 	};
 
+	if (!article) return null;
 	return (
 		<>
 			<ListHeader>글쓰기</ListHeader>

@@ -4,7 +4,7 @@ import replaceItemAtIndex from '../utils/replaceItemAtIndex';
 
 type ArticlesAction = {
 	type: string;
-	id?: number;
+	id?: string;
 	payload?: Article;
 	value?: Article[];
 };

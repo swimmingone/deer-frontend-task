@@ -5,7 +5,7 @@ import { Article } from '../types/Article';
 
 interface Prop {
 	data: Article;
-	setData: Dispatch<SetStateAction<Article>>;
+	setData: Dispatch<SetStateAction<Article | null>>;
 	onSubmit?: () => void;
 }
 

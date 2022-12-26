@@ -1,11 +1,4 @@
-import React, {
-	ReactNode,
-	createContext,
-	useCallback,
-	useEffect,
-	useReducer,
-	useState,
-} from 'react';
+import React, { ReactNode, createContext, useCallback, useEffect, useReducer } from 'react';
 import ArticleReducer from './ArticleReducer';
 import { Article } from '../types/Article';
 
@@ -13,16 +6,14 @@ const initialState: Article[] = [];
 
 interface ArticleContextType {
 	articles: Article[];
-	nextId: number;
-	getArticleById: (id: number) => Article | null;
+	getArticleById: (id: string) => Article | null;
 	onCreate: (data: Article) => void;
 	onEdit: (data: Article) => void;
-	onDelete: (id: number) => void;
+	onDelete: (id: string) => void;
 }
 
 export const ArticleContext = createContext<ArticleContextType>({
 	articles: [],
-	nextId: 0,
 	getArticleById: () => null,
 	onCreate: () => {},
 	onEdit: () => {},
@@ -35,22 +26,20 @@ interface Prop {
 
 const ArticleProvider = ({ children }: Prop) => {
 	const [state, dispatch] = useReducer(ArticleReducer, initialState);
-	const [id, setId] = useState(0);
 
 	const getArticleById = useCallback(
-		(id: number) => {
+		(id: string) => {
 			return state.find((article) => article.id === id) ?? null;
 		},
 		[state],
 	);
 
-	const onCreate = (data: Article) => {
-		setId((id) => id + 1);
+	const onCreate = useCallback((data: Article) => {
 		dispatch({
 			type: 'CREATE_ARTICLE',
-			payload: { ...data, id: id },
+			payload: data,
 		});
-	};
+	}, []);
 
 	const onEdit = useCallback((data: Article) => {
 		dispatch({
@@ -60,7 +49,7 @@ const ArticleProvider = ({ children }: Prop) => {
 		});
 	}, []);
 
-	const onDelete = useCallback((id: number) => {
+	const onDelete = useCallback((id: string) => {
 		dispatch({
 			type: 'DELETE_ARTICLE',
 			id,
@@ -86,7 +75,6 @@ const ArticleProvider = ({ children }: Prop) => {
 		<ArticleContext.Provider
 			value={{
 				articles: state,
-				nextId: id,
 				getArticleById,
 				onCreate,
 				onEdit,

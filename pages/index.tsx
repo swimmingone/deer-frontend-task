@@ -7,7 +7,6 @@ import { ArticleContext } from '../src/provider/ArticleProvider';
 
 const Home: NextPage = () => {
 	const router = useRouter();
-
 	const { articles } = useContext(ArticleContext);
 	const titleList = articles.map((article, index) => {
 		return (
