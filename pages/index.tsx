@@ -8,9 +8,9 @@ import { ArticleContext } from '../src/provider/ArticleProvider';
 const Home: NextPage = () => {
 	const router = useRouter();
 	const { articles } = useContext(ArticleContext);
-	const titleList = articles.map((article, index) => {
+	const titleList = articles.map((article) => {
 		return (
-			<ListRow key={`${article}-${index}`} onClick={() => router.push(`/detail/${index}`)}>
+			<ListRow key={article.id} onClick={() => router.push(`/detail/${article.id}`)}>
 				{article?.title}
 			</ListRow>
 		);
