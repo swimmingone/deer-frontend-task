@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import ArticleForm from '../../../src/components/ArticleForm';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { Article } from '../../../src/types/Article';
@@ -8,10 +7,19 @@ import FormItem from '../../../src/components/FormItem';
 
 const Detail: NextPage = () => {
 	const router = useRouter();
-	const { getArticleById } = useContext(ArticleContext);
+	const { getArticleById, onDelete } = useContext(ArticleContext);
 	const id = router.query.id;
 	const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 	const [article, setArticle] = useState<Article | null>(null);
+
+	const deleteArticle = () => {
+		if (article) {
+			onDelete(article.id);
+		} else {
+			alert('게시글이 삭제되지 않았습니다.');
+		}
+		router.push('/');
+	};
 
 	useEffect(() => {
 		if (typeof id === 'string') {
@@ -38,7 +46,9 @@ const Detail: NextPage = () => {
 				>
 					수정하기
 				</button>
-				<button className="btn-secondary btn-sm btn flex-grow">삭제하기</button>
+				<button className="btn-secondary btn-sm btn flex-grow" onClick={deleteArticle}>
+					삭제하기
+				</button>
 			</div>
 		</div>
 	);
