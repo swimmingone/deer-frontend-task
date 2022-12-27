@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Article } from '../../../src/types/Article';
 import { ArticleContext } from '../../../src/provider/ArticleProvider';
 import FormItem from '../../../src/components/FormItem';
+import Link from 'next/link';
 
 const Detail: NextPage = () => {
 	const router = useRouter();
@@ -40,12 +41,12 @@ const Detail: NextPage = () => {
 			<FormItem label={'제목'}>{article.title}</FormItem>
 			<FormItem label={'내용'}>{article.content}</FormItem>
 			<div className="box-border flex h-8 w-1/2 justify-between gap-4">
-				<button
+				<Link
 					className="btn-secondary btn-sm btn flex-grow"
-					onClick={() => router.push(`/detail/${article.id}/edit`)}
+					href={`/detail/${article.id}/edit`}
 				>
 					수정하기
-				</button>
+				</Link>
 				<button className="btn-secondary btn-sm btn flex-grow" onClick={deleteArticle}>
 					삭제하기
 				</button>

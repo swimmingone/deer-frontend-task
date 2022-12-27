@@ -1,16 +1,15 @@
 import type { NextPage } from 'next';
 import ListHeader from '../src/components/ListHeader';
 import ListRow from '../src/components/ListRow';
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { ArticleContext } from '../src/provider/ArticleProvider';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
-	const router = useRouter();
 	const { articles } = useContext(ArticleContext);
 	const titleList = articles.map((article) => {
 		return (
-			<ListRow key={article.id} onClick={() => router.push(`/detail/${article.id}`)}>
+			<ListRow key={article.id} href={`/detail/${article.id}`}>
 				{article?.title}
 			</ListRow>
 		);
@@ -20,14 +19,9 @@ const Home: NextPage = () => {
 		<>
 			<ListHeader
 				right={
-					<button
-						className="btn-accent btn-xs btn sm:btn-sm md:btn-md"
-						onClick={() => {
-							router.push('/create');
-						}}
-					>
+					<Link className="btn-accent btn-xs btn sm:btn-sm md:btn-md" href={'/create'}>
 						새 글 쓰기
-					</button>
+					</Link>
 				}
 			>
 				디어 게시판

@@ -1,20 +1,21 @@
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 interface Prop {
 	children: ReactNode;
-	onClick?: () => void;
+	href: string;
 }
 
-const ListRow = ({ children, onClick }: Prop) => {
+const ListRow = ({ children, href }: Prop) => {
 	return (
-		<div
+		<Link
+			href={href}
 			className={
 				'w-full cursor-pointer border-t bg-white p-4 text-xl text-primary-content hover:text-primary-focus'
 			}
-			onClick={onClick}
 		>
 			{children}
-		</div>
+		</Link>
 	);
 };
 
