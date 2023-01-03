@@ -1,23 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { ArticleRepositoryImpl } from '../infrastructure/ArticleRepositoryImpl';
-import { ArticleRepository } from '../model/ArticleRepository';
-import { Article } from '../model/Article';
-
-const repository: ArticleRepository = new ArticleRepositoryImpl();
+import { useMutation, useQueryClient } from 'react-query';
+import { createArticle, deleteArticleById } from '../apis/article';
 
 export const useArticles = () => {
 	const queryClient = useQueryClient();
 
-	const { data: getArticles, isSuccess: getArticlesIsSuccess } = useQuery(['articles'], () =>
-		repository.findAll(0, 3, 'asc'),
-	);
-
-	const createArticle = (article: Article) => repository.save(article);
-	const { mutate: onCreate } = useMutation(createArticle, {
-		onSuccess: (data) => {
+	const { mutateAsync: onCreate } = useMutation(createArticle, {
+		onSuccess: () => {
 			queryClient.invalidateQueries('articles');
 		},
 	});
 
-	return { onCreate, getArticles, getArticlesIsSuccess };
+	const { mutateAsync: onDelete } = useMutation(deleteArticleById, {
+		onSuccess: () => {
+			queryClient.invalidateQueries('articles');
+		},
+	});
+
+	return { onCreate, onDelete };
 };

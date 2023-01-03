@@ -11,6 +11,7 @@ interface ArticlesProps {
 }
 
 export async function getArticles({ page = 0, pageSize = 10, sort = 'asc' }: ArticlesProps) {
+	console.log('fetching!');
 	return repository.findAll(page, pageSize, sort);
 }
 
@@ -23,3 +24,7 @@ export async function getArticleById({ articleId = 0 }: ArticleProps) {
 }
 
 export const createArticle = (article: Article) => repository.save(article);
+
+export async function deleteArticleById({ articleId = 0 }: ArticleProps) {
+	return repository.deleteById(articleId);
+}
