@@ -10,8 +10,8 @@ interface ArticlesProps {
 	sort?: 'asc' | 'desc';
 }
 
-export async function getArticles({ page = 0, pageSize = 10, sort = 'asc' }: ArticlesProps) {
-	return repository.findAll(page, pageSize, sort);
+export async function getArticles({ page = 1, pageSize = 10, sort = 'asc' }: ArticlesProps) {
+	return repository.findAll(page - 1, pageSize, sort);
 }
 
 interface ArticleProps {
