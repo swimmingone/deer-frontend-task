@@ -9,11 +9,11 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ArticleProvider>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</ArticleProvider>
+			{/* <ArticleProvider> */}
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+			{/* </ArticleProvider> */}
 		</QueryClientProvider>
 	);
 }

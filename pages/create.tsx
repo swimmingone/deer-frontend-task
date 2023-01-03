@@ -4,11 +4,14 @@ import ArticleForm from '../src/components/ArticleForm';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { ArticleContext } from '../src/provider/ArticleProvider';
-import { Article } from '../src/types/Article';
+import { Article as TArticle } from '../src/types/Article';
+import { useArticles } from '../src/hooks/useArticles';
+import { Article } from '../src/model/Article';
 
 const Create: NextPage = () => {
 	const router = useRouter();
-	const { onCreate } = useContext(ArticleContext);
+	// const { onCreate } = useContext(ArticleContext);
+	const { onCreate } = useArticles();
 
 	const initialArticle = {
 		id: '',
@@ -16,11 +19,12 @@ const Create: NextPage = () => {
 		content: '',
 	};
 
-	const [article, setArticle] = useState<Article | null>(initialArticle);
+	const [article, setArticle] = useState<TArticle | null>(initialArticle);
 
 	const onSubmit = () => {
 		if (article) {
-			onCreate(article);
+			const newArticle = new Article(article.title, article.content ?? '');
+			onCreate(newArticle);
 		} else {
 			alert('게시글이 생성되지 않았습니다.');
 		}

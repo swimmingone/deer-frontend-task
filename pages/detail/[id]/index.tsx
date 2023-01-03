@@ -24,7 +24,6 @@ const Detail: NextPage = () => {
 
 	useEffect(() => {
 		if (typeof id === 'string') {
-			console.log('test');
 			setSelectedArticle(getArticleById(id));
 		}
 	}, [getArticleById, id]);

@@ -4,10 +4,12 @@ import ListRow from '../src/components/ListRow';
 import { useContext } from 'react';
 import { ArticleContext } from '../src/provider/ArticleProvider';
 import Link from 'next/link';
+import { useArticles } from '../src/hooks/useArticles';
 
 const Home: NextPage = () => {
-	const { articles } = useContext(ArticleContext);
-	const titleList = articles.map((article) => {
+	// const { articles } = useContext(ArticleContext);
+	const { getArticles } = useArticles();
+	const titleList = getArticles?.content.map((article) => {
 		return (
 			<ListRow key={article.id} href={`/detail/${article.id}`}>
 				{article?.title}
