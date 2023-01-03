@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { Article } from '../../../src/types/Article';
 import { ArticleContext } from '../../../src/provider/ArticleProvider';
-import FormItem from '../../../src/components/FormItem';
 
 const Edit: NextPage = () => {
 	const router = useRouter();
@@ -24,7 +23,6 @@ const Edit: NextPage = () => {
 
 	useEffect(() => {
 		if (typeof id === 'string') {
-			console.log('test');
 			setSelectedArticle(getArticleById(id));
 		}
 	}, [getArticleById, id]);
