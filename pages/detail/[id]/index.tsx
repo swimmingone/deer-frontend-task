@@ -1,38 +1,27 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { Article } from '../../../src/types/Article';
-import { ArticleContext } from '../../../src/provider/ArticleProvider';
 import FormItem from '../../../src/components/FormItem';
 import Link from 'next/link';
+import { useQuery } from 'react-query';
+import { getArticleById } from '../../../src/apis/article';
 
 const Detail: NextPage = () => {
 	const router = useRouter();
-	const { getArticleById, onDelete } = useContext(ArticleContext);
 	const id = router.query.id;
-	const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-	const [article, setArticle] = useState<Article | null>(null);
 
-	const deleteArticle = () => {
-		if (article) {
-			onDelete(article.id);
-		} else {
-			alert('게시글이 삭제되지 않았습니다.');
-		}
-		router.push('/');
-	};
+	const { data: article } = useQuery(['articles', id], () =>
+		getArticleById({ articleId: typeof id === 'string' ? parseInt(id) : 0 }),
+	);
+	console.log(article);
 
-	useEffect(() => {
-		if (typeof id === 'string') {
-			setSelectedArticle(getArticleById(id));
-		}
-	}, [getArticleById, id]);
-
-	useEffect(() => {
-		if (selectedArticle) {
-			setArticle(selectedArticle);
-		}
-	}, [selectedArticle]);
+	// const deleteArticle = () => {
+	// 	if (article) {
+	// 		onDelete(article.id);
+	// 	} else {
+	// 		alert('게시글이 삭제되지 않았습니다.');
+	// 	}
+	// 	router.push('/');
+	// };
 
 	if (!article) return null;
 	return (
@@ -46,9 +35,7 @@ const Detail: NextPage = () => {
 				>
 					수정하기
 				</Link>
-				<button className="btn-secondary btn-sm btn flex-grow" onClick={deleteArticle}>
-					삭제하기
-				</button>
+				<button className="btn-secondary btn-sm btn flex-grow">삭제하기</button>
 			</div>
 		</div>
 	);

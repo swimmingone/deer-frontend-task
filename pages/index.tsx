@@ -1,15 +1,13 @@
 import type { NextPage } from 'next';
 import ListHeader from '../src/components/ListHeader';
 import ListRow from '../src/components/ListRow';
-import { useContext } from 'react';
-import { ArticleContext } from '../src/provider/ArticleProvider';
 import Link from 'next/link';
-import { useArticles } from '../src/hooks/useArticles';
+import { useQuery } from 'react-query';
+import { getArticles } from '../src/apis/article';
 
 const Home: NextPage = () => {
-	// const { articles } = useContext(ArticleContext);
-	const { getArticles } = useArticles();
-	const titleList = getArticles?.content.map((article) => {
+	const { data: articles } = useQuery('articles', () => getArticles({}));
+	const titleList = articles?.content.map((article) => {
 		return (
 			<ListRow key={article.id} href={`/detail/${article.id}`}>
 				{article?.title}
