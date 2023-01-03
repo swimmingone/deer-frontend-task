@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { createArticle, deleteArticleById, editArticleById } from '../apis/article';
 
-export const useArticles = () => {
+export function useArticlesMutation() {
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: onCreate } = useMutation(createArticle, {
@@ -23,4 +23,4 @@ export const useArticles = () => {
 	});
 
 	return { onCreate, onEdit, onDelete };
-};
+}

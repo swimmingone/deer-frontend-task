@@ -4,11 +4,11 @@ import FormItem from '../../../src/components/FormItem';
 import Link from 'next/link';
 import { useQuery } from 'react-query';
 import { getArticleById } from '../../../src/apis/article';
-import { useArticles } from '../../../src/hooks/useArticles';
+import { useArticlesMutation } from '../../../src/hooks/useArticlesMutation';
 
 const Detail: NextPage = () => {
 	const router = useRouter();
-	const { onDelete } = useArticles();
+	const { onDelete } = useArticlesMutation();
 	const id = router.query.id;
 
 	const { data: article } = useQuery(['articles', id], () =>

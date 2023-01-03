@@ -4,12 +4,12 @@ import ArticleForm from '../src/components/ArticleForm';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Article as TArticle } from '../src/types/Article';
-import { useArticles } from '../src/hooks/useArticles';
+import { useArticlesMutation } from '../src/hooks/useArticlesMutation';
 import { Article } from '../src/model/Article';
 
 const Create: NextPage = () => {
 	const router = useRouter();
-	const { onCreate } = useArticles();
+	const { onCreate } = useArticlesMutation();
 
 	const initialArticle = {
 		id: 0,

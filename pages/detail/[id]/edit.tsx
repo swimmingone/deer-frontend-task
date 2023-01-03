@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import { Article as TArticle } from '../../../src/types/Article';
 import { useQuery } from 'react-query';
 import { getArticleById } from '../../../src/apis/article';
-import { useArticles } from '../../../src/hooks/useArticles';
+import { useArticlesMutation } from '../../../src/hooks/useArticlesMutation';
 import { Article } from '../../../src/model/Article';
 
 const Edit: NextPage = () => {
 	const router = useRouter();
-	const { onEdit } = useArticles();
+	const { onEdit } = useArticlesMutation();
 	const id = router.query.id;
 	const [article, setArticle] = useState<TArticle | null>(null);
 
