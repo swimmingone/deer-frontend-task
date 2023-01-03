@@ -5,7 +5,7 @@ import replaceItemAtIndex from '../utils/replaceItemAtIndex';
 
 type ArticlesAction = {
 	type: string;
-	id?: string;
+	id?: number;
 	payload?: Article;
 	value?: Article[];
 };
@@ -23,7 +23,7 @@ export default function reducer(state: Article[], action: ArticlesAction): Artic
 			return [
 				...state,
 				{
-					id: newID(),
+					id: 0,
 					title: action.payload.title,
 					content: action.payload.content,
 				},

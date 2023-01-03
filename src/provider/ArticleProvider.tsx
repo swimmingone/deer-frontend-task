@@ -6,10 +6,10 @@ const initialState: Article[] = [];
 
 interface ArticleContextType {
 	articles: Article[];
-	getArticleById: (id: string) => Article | null;
+	getArticleById: (id: number) => Article | null;
 	onCreate: (data: Article) => void;
 	onEdit: (data: Article) => void;
-	onDelete: (id: string) => void;
+	onDelete: (id: number) => void;
 }
 
 export const ArticleContext = createContext<ArticleContextType>({
@@ -28,7 +28,7 @@ const ArticleProvider = ({ children }: Prop) => {
 	const [state, dispatch] = useReducer(ArticleReducer, initialState);
 
 	const getArticleById = useCallback(
-		(id: string) => {
+		(id: number) => {
 			return state.find((article) => article.id === id) ?? null;
 		},
 		[state],
@@ -49,7 +49,7 @@ const ArticleProvider = ({ children }: Prop) => {
 		});
 	}, []);
 
-	const onDelete = useCallback((id: string) => {
+	const onDelete = useCallback((id: number) => {
 		dispatch({
 			type: 'DELETE_ARTICLE',
 			id,

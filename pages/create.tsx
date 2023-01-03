@@ -12,7 +12,7 @@ const Create: NextPage = () => {
 	const { onCreate } = useArticles();
 
 	const initialArticle = {
-		id: '',
+		id: 0,
 		title: '',
 		content: '',
 	};
@@ -22,7 +22,7 @@ const Create: NextPage = () => {
 	const onSubmit = () => {
 		if (article) {
 			const newArticle = new Article(article.title, article.content ?? '');
-			onCreate(newArticle).then(() => router.push('/'));
+			onCreate({ newArticle }).then(() => router.push('/'));
 		} else {
 			alert('게시글이 생성되지 않았습니다.');
 		}

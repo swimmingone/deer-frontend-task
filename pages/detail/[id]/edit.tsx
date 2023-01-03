@@ -1,35 +1,38 @@
 import type { NextPage } from 'next';
 import ArticleForm from '../../../src/components/ArticleForm';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { Article } from '../../../src/types/Article';
-import { ArticleContext } from '../../../src/provider/ArticleProvider';
+import { useEffect, useState } from 'react';
+import { Article as TArticle } from '../../../src/types/Article';
+import { useQuery } from 'react-query';
+import { getArticleById } from '../../../src/apis/article';
+import { useArticles } from '../../../src/hooks/useArticles';
+import { Article } from '../../../src/model/Article';
 
 const Edit: NextPage = () => {
 	const router = useRouter();
-	const { onEdit, getArticleById } = useContext(ArticleContext);
+	const { onEdit } = useArticles();
 	const id = router.query.id;
-	const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-	const [article, setArticle] = useState<Article | null>(null);
+	const [article, setArticle] = useState<TArticle | null>(null);
 
+	const { data: selectedArticle } = useQuery(['articles', id], () =>
+		getArticleById({ articleId: typeof id === 'string' ? parseInt(id) : 0 }),
+	);
 	const onSubmit = () => {
 		if (article) {
-			onEdit(article);
+			const newArticle = new Article(article.title, article.content ?? '');
+			onEdit({ articleId: article.id, newArticle }).then(() => router.push('/'));
 		} else {
 			alert('게시글이 수정되지 않았습니다.');
 		}
-		router.push('/');
 	};
 
 	useEffect(() => {
-		if (typeof id === 'string') {
-			setSelectedArticle(getArticleById(id));
-		}
-	}, [getArticleById, id]);
-
-	useEffect(() => {
 		if (selectedArticle) {
-			setArticle(selectedArticle);
+			setArticle({
+				id: selectedArticle.id,
+				title: selectedArticle.title,
+				content: selectedArticle.content,
+			});
 		}
 	}, [selectedArticle]);
 
